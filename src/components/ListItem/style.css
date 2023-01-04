@@ -1,0 +1,31 @@
+.listItemWrap{
+  display: flex;
+  justify-content: space-between;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid #282c34;
+  background-color: #05add9;
+}
+
+.nameEmp{
+  width: 50%;
+  color: white;
+  font-weight: bold;
+}
+
+.salaryEmp{
+  width: 20%;
+  color: white;
+  font-weight: bold;
+}
+
+.deleteEmp{
+  background: #f59e9e;
+  margin: 0 2px;
+}
+
+.addBonusEmp{
+  background: gold;
+  margin: 0 2px;
+}
