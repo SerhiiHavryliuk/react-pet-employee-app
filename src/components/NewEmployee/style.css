@@ -21,4 +21,5 @@
 .NewEmployeeAddBtn{
   background: #74de60;
   margin: 0 2px;
+  cursor: pointer;
 }

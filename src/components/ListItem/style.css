@@ -23,9 +23,11 @@
 .deleteEmp{
   background: #f59e9e;
   margin: 0 2px;
+  cursor: pointer;
 }
 
 .addBonusEmp{
   background: gold;
   margin: 0 2px;
+  cursor: pointer;
 }

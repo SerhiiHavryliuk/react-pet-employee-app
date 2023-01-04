@@ -1,14 +1,16 @@
 import React from "react";
 import './style.css'
 import ListItem from "../ListItem";
-import {dataEmp} from '../../dataEmploees'
+//import {dataEmp} from '../../dataEmploees'
 
 class List extends React.Component {
+    dataList = this.props.data;
+
     render() {
         return (
-            <div data= {dataEmp} className='listWrap'>
-                {dataEmp.map(item => (
-                    <ListItem nameEmp = {item.name} salaryEmp={item.salary}/>
+            <div className='listWrap'>
+                {this.dataList.map(item => (
+                    <ListItem key = {item.id} nameEmp = {item.name} salaryEmp={item.salary}/>
                 ))}
             </div>
         );
