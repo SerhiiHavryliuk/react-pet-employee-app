@@ -10,13 +10,11 @@
 
 .nameEmp{
   width: 50%;
-  color: white;
   font-weight: bold;
 }
 
 .salaryEmp{
   width: 20%;
-  color: white;
   font-weight: bold;
 }
 
@@ -28,6 +26,11 @@
 
 .addBonusEmp{
   background: gold;
+  margin: 0 2px;
+  cursor: pointer;
+}
+.deleteBonusEmp{
+  background: #6c6439;
   margin: 0 2px;
   cursor: pointer;
 }

@@ -3,4 +3,10 @@
   border-radius: 20px;
   background-color: #61dafb;
   padding: 20px;
+  color: white;
+}
+
+.bonus{
+  color: gold;
+  font-weight: bolder;
 }

@@ -16,6 +16,7 @@ class App extends Component {
             // ],
             title: 'React pet project',
             countEmployee: '',
+            counterEmployeesBonus: 0,
             inpName: 'Henry',
             inpSalary: 34567,
             data: dataEmp,
@@ -27,6 +28,7 @@ class App extends Component {
 
     componentDidMount(){
         console.log('Компонент App додається в DOM');
+        this.setCounterBonus();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -46,6 +48,34 @@ class App extends Component {
         })
     }
 
+    addBonus = (id) => {
+        console.log("Id for bonus - " + id)
+        this.setState(({data}) =>{
+            return {
+                data: data.map( item => {
+                    if(item.id === id){
+                        return {...item, isBonus: !item.isBonus}
+                    }
+                    return item;
+                })
+            }
+        })
+
+        this.setCounterBonus();
+    }
+
+    // Встановлюємо актуальну кільість працівників, які мають бонус
+    setCounterBonus = () => {
+        // Тут важливий момент, треба передавати останній стейт самого списку через колбек ф-ію,
+        // ({data}) => - цей вираз означає що ми будемо чекати останній стан нашого списку data
+        // це треба для того щоб правильно рахувалась кількість працівників, які отримають премію
+        this.setState(({data}) =>{
+            return{
+                counterEmployeesBonus: data.filter(item => item.isBonus).length
+            }
+        })
+    }
+
 
     render() {
 
@@ -53,10 +83,13 @@ class App extends Component {
             <div className="app">
                 <Header
                     title = {this.state.title}
-                    countEmployee ={this.state.data.length}/>
+                    countEmployee ={this.state.data.length}
+                    countEmployeesBonus = {this.state.counterEmployeesBonus}/>
+
                 <List
                     data={this.state.data}
-                    onDelete={this.deleteItem}/>
+                    onDelete={this.deleteItem}
+                    onAddBonus={this.addBonus}/>
             </div>
         );
     }

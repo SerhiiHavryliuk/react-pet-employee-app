@@ -18,8 +18,15 @@ class ListItem extends React.Component {
         return (
             <div className='listItemWrap'>
                 <div className='nameEmp'> {this.props.name} </div>
-                <div className='salaryEmp'> Salary  {this.props.salary}  </div>
-                <button className='addBonusEmp'> + bonus </button>
+                <div className='salaryEmp'> Salary  {this.props.salary} </div>
+
+                {/* Виконання умови через тернальний оператор */}
+                {
+                    this.props.isBonus ?
+                    <button className='addBonusEmp' onClick={this.props.onAddBonus}> + bonus </button>:
+                    <button className='deleteBonusEmp'> - bonus </button>
+                }
+
                 <button className='deleteEmp' onClick={this.props.onDelete}> delete </button>
             </div>
         );

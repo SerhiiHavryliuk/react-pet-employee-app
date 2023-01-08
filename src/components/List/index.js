@@ -21,18 +21,28 @@ class List extends React.Component {
 
     render() {
         // деструктуризація пропсів в компоненті
-        const {data, onDelete} = this.props
+        const {data, onDelete, onAddBonus} = this.props
 
         // у циклі формуємо список елементів
         const elements = data.map(item => {
             // деструктуризація пропсів для кожного item окремо
             const {id, ...itemProps} = item;
+
+            let classNameItem = ''
+            if(itemProps.isBonus){
+                console.log(555555);
+                classNameItem = 'bonus'
+            }
             return (
-                <ListItem
-                    key={id}
-                    {...itemProps}
-                    onDelete={() => onDelete(id)}
-                />
+                <div className={classNameItem}>
+                    <ListItem
+                        className={classNameItem}
+                        key={id}
+                        {...itemProps}
+                        onDelete={() => onDelete(id)}
+                        onAddBonus={() => onAddBonus(id)}
+                    />
+                </div>
             )
         })
 
