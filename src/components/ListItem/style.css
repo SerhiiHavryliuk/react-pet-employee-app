@@ -1,7 +1,7 @@
 .listItemWrap{
   display: flex;
   justify-content: space-between;
-  margin: 10px;
+  margin-bottom: 10px;
   padding: 10px;
   border-radius: 20px;
   border: 1px solid #282c34;

@@ -1,9 +1,10 @@
-import { Component } from 'react';
-import {dataEmp} from '../../dataEmployees'
-
-import './style.css';
+import React, { Component } from 'react';
 import List from "../List";
 import Header from "../Header";
+// import FormAddItem from "../FormAddItem";
+import {dataEmp} from '../../dataEmployees'
+import './style.css';
+
 
 class App extends Component {
     constructor(props) {
@@ -18,8 +19,8 @@ class App extends Component {
             title: 'React pet project',
             countEmployee: '',
             counterEmployeesBonus: 0,
-            inpName: 'Henry',
-            inpSalary: 34567,
+            inpName: '',
+            inpSalary: '',
         }
         this.maxId = 4;
     }
@@ -92,6 +93,42 @@ class App extends Component {
         })
     }
 
+    onChangeInpName = (e) => {
+        console.log(e.target.value);
+        this.setState(({dataInp}) =>{
+            return{
+                inpName: e.target.value
+            }
+        })
+        console.log(this.state.inpName);
+    }
+
+    onChangeInpSalary = (e) => {
+        console.log(e.target.value);
+        this.setState(({dataInp}) =>{
+            return{
+                inpSalary: e.target.value
+            }
+        })
+        console.log(this.state.inpSalary);
+    }
+
+    addItem = (e) => {
+        let dataList = this.state.data.map(item => item);
+        const objItem = {
+            id: this.state.data.length + Math.floor(Math.random() * 1000),
+            name: `${this.state.inpName}`,
+            salary:`${this.state.inpSalary}`,
+            isBonus: false };
+        dataList = [...this.state.data, objItem];
+
+        this.setState(({data}) =>{
+            return{
+                data: dataList
+            }
+        })
+    }
+
 
     render() {
 
@@ -101,6 +138,17 @@ class App extends Component {
                     title = {this.state.title}
                     countEmployee ={this.state.data.length}
                     countEmployeesBonus = {this.state.counterEmployeesBonus}/>
+
+                {/*<FormAddItem*/}
+                {/*    inpName = {this.state.inpName}*/}
+                {/*    inpSalary = {this.state.inpSalary}/>*/}
+
+                <h3> Другий спосіб додавання </h3>
+                <div className='NewEmployeeWrap'>
+                    <input className='NewEmployeeName' type='text' placeholder='Enter Name' onChange={this.onChangeInpName} />
+                    <input className='NewEmployeeSalary' type='text' placeholder='Enter Salary' onChange={this.onChangeInpSalary}/>
+                    <button className='NewEmployeeAddBtn' onClick={this.addItem}> add </button>
+                </div>
 
                 <List
                     data={this.state.data}
