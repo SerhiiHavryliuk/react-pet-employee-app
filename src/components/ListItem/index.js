@@ -14,6 +14,7 @@ class ListItem extends React.Component {
     componentWillUnmount() {
         console.log('викликається у ListItem перед видаленням із DOM');
     }
+
     render() {
         return (
             <div className='listItemWrap'>
@@ -23,8 +24,8 @@ class ListItem extends React.Component {
                 {/* Виконання умови через тернальний оператор */}
                 {
                     this.props.isBonus ?
-                    <button className='addBonusEmp' onClick={this.props.onAddBonus}> + bonus </button>:
-                    <button className='deleteBonusEmp'> - bonus </button>
+                        <button className='deleteBonusEmp' onClick={this.props.onToggleAddBonus}> - bonus </button>:
+                        <button className='addBonusEmp' onClick={this.props.onToggleAddBonus}> + bonus </button>
                 }
 
                 <button className='deleteEmp' onClick={this.props.onDelete}> delete </button>

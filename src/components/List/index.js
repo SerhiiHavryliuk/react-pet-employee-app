@@ -21,26 +21,27 @@ class List extends React.Component {
 
     render() {
         // деструктуризація пропсів в компоненті
-        const {data, onDelete, onAddBonus} = this.props
+        const {data, onDelete, onToggleAddBonus} = this.props
 
         // у циклі формуємо список елементів
         const elements = data.map(item => {
             // деструктуризація пропсів для кожного item окремо
             const {id, ...itemProps} = item;
 
+            // Додавання класу до тегу
             let classNameItem = ''
             if(itemProps.isBonus){
-                console.log(555555);
                 classNameItem = 'bonus'
             }
             return (
-                <div className={classNameItem}>
+                // {...itemProps} - це деструктиразація елементів їз масиві, все що є в комірці масиву розвертається у атрибути
+                // дуже зручно так як назви атрибутів не треба прописувати вручну
+                <div className={classNameItem} key={id}>
                     <ListItem
                         className={classNameItem}
-                        key={id}
                         {...itemProps}
                         onDelete={() => onDelete(id)}
-                        onAddBonus={() => onAddBonus(id)}
+                        onToggleAddBonus={() => onToggleAddBonus(id)}
                     />
                 </div>
             )
@@ -48,6 +49,7 @@ class List extends React.Component {
 
         return (
             <div className='listWrap'>
+                {/* тут всю логіку ми винесли до рендеру*/}
                 {elements}
             </div>
         );
