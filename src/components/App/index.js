@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import List from "../List";
 import Header from "../Header";
-// import FormAddItem from "../FormAddItem";
 import {dataEmp} from '../../dataEmployees'
 import './style.css';
 
@@ -22,7 +21,7 @@ class App extends Component {
             inpName: '',
             inpSalary: '',
         }
-        this.maxId = 4;
+        this.maxId = 4; // приклад створення змінної, ніде не використовується
     }
 
     // ----------------------------------------------------------------
@@ -58,6 +57,9 @@ class App extends Component {
                 data: data.filter(item => item.id !== id)
             }
         })
+
+        // встановлюємо актуальну кількість бонусів
+        this.setCounterBonus();
     }
 
     // ----------------------------------------------------------------
@@ -67,6 +69,9 @@ class App extends Component {
         console.log("Id for bonus - " + id)
         this.setState(({data}) =>{
             return {
+                // метд map - створює новий масив
+                // в якому ми знаходимо потрібну людина за id (це item)
+                // та через деструктиризацію розвертаюмо всі поля які там були (...item) та заміняємо значення на протилежне (isBonus: !item.isBonus)
                 data: data.map( item => {
                     if(item.id === id){
                         return {...item, isBonus: !item.isBonus}
@@ -93,38 +98,67 @@ class App extends Component {
         })
     }
 
+    // ----------------------------------------------------------------
+    // Коли йде зміна значення у input то ми зчитуємо ці значення та перезаписуємо відповідно їх state
+    // ----------------------------------------------------------------
     onChangeInpName = (e) => {
-        console.log(e.target.value);
         this.setState(({dataInp}) =>{
             return{
                 inpName: e.target.value
             }
         })
-        console.log(this.state.inpName);
     }
 
+    // ----------------------------------------------------------------
+    // Коли йде зміна значення у input то ми зчитуємо ці значення та перезаписуємо відповідно їх state
+    // ----------------------------------------------------------------
     onChangeInpSalary = (e) => {
-        console.log(e.target.value);
         this.setState(({dataInp}) =>{
             return{
                 inpSalary: e.target.value
             }
         })
-        console.log(this.state.inpSalary);
     }
 
+    // ----------------------------------------------------------------
+    // додаємо нового користувача до списку
+    // ----------------------------------------------------------------
     addItem = (e) => {
-        let dataList = this.state.data.map(item => item);
-        const objItem = {
-            id: this.state.data.length + Math.floor(Math.random() * 1000),
-            name: `${this.state.inpName}`,
-            salary:`${this.state.inpSalary}`,
-            isBonus: false };
-        dataList = [...this.state.data, objItem];
+        // перевірка на пусті поля, щоб не додати у список пусту строку
+        if(this.state.inpName && this.state.inpSalary) {
 
-        this.setState(({data}) =>{
+            // створюємо шаблон обєкту та заповняємо його інфою, яка прийшла зі стейту інпутів
+            const objItem = {
+                id: this.state.data.length + Math.floor(Math.random() * 1000),
+                name: `${this.state.inpName}`,
+                salary:`${this.state.inpSalary}`,
+                isBonus: false
+            };
+
+            // створюємо новий масив в який додаємо попередній масив та новий обєкт у кінець
+            let dataList = [...this.state.data, objItem];
+
+            // оновлюємо stste загального списку
+            this.setState(({data}) =>{
+                return{
+                    data: dataList
+                }
+            })
+
+            // очищаємо поля інпутів
+            this.resetFormField();
+        }
+
+    }
+
+    // ----------------------------------------------------------------
+    // reset input fields
+    // ----------------------------------------------------------------
+    resetFormField = () => {
+        this.setState(({inpName}) =>{
             return{
-                data: dataList
+                inpName: '',
+                inpSalary: '',
             }
         })
     }
@@ -137,23 +171,26 @@ class App extends Component {
                 <Header
                     title = {this.state.title}
                     countEmployee ={this.state.data.length}
-                    countEmployeesBonus = {this.state.counterEmployeesBonus}/>
+                    countEmployeesBonus = {this.state.counterEmployeesBonus}
+                />
 
-                {/*<FormAddItem*/}
-                {/*    inpName = {this.state.inpName}*/}
-                {/*    inpSalary = {this.state.inpSalary}/>*/}
-
-                <h3> Другий спосіб додавання </h3>
-                <div className='NewEmployeeWrap'>
-                    <input className='NewEmployeeName' type='text' placeholder='Enter Name' onChange={this.onChangeInpName} />
-                    <input className='NewEmployeeSalary' type='text' placeholder='Enter Salary' onChange={this.onChangeInpSalary}/>
-                    <button className='NewEmployeeAddBtn' onClick={this.addItem}> add </button>
+                <div className='addItemWrap'>
+                    <input className='addItemName' type='text' placeholder='Enter Name' onChange={this.onChangeInpName} value={this.state.inpName}/>
+                    <input className='addItemSalary' type='text' placeholder='Enter Salary' onChange={this.onChangeInpSalary} value={this.state.inpSalary}/>
+                    <button className='addItemBtn' onClick={this.addItem}> add </button>
                 </div>
 
-                <List
-                    data={this.state.data}
-                    onDelete={this.deleteItem}
-                    onToggleAddBonus={this.ToggleAddBonus}/>
+                {/* Умова, тернальний оператор. Якщо список пустий то показуємо повідомлення */}
+                {
+                    this.state.data.length?
+                    <List
+                        data={this.state.data}
+                        onDelete={this.deleteItem}
+                        onToggleAddBonus={this.ToggleAddBonus}
+                    />:
+                    <p className='emptyList'> List is empty! </p>
+                }
+
             </div>
         );
     }
